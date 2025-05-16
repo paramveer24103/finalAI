@@ -9,228 +9,157 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
-      users: {
+      admin_users: {
         Row: {
           id: string
           email: string
-          full_name: string | null
-          phone_number: string | null
-          address: string | null
-          created_at: string | null
-          updated_at: string | null
+          password: string
+          name: string
+          role: 'super_admin' | 'content_manager' | 'support'
+          created_at: string
+          last_login: string | null
         }
         Insert: {
           id?: string
           email: string
-          full_name?: string | null
-          phone_number?: string | null
-          address?: string | null
-          created_at?: string | null
-          updated_at?: string | null
+          password: string
+          name: string
+          role: 'super_admin' | 'content_manager' | 'support'
+          created_at?: string
+          last_login?: string | null
         }
         Update: {
           id?: string
           email?: string
-          full_name?: string | null
-          phone_number?: string | null
-          address?: string | null
-          created_at?: string | null
-          updated_at?: string | null
+          password?: string
+          name?: string
+          role?: 'super_admin' | 'content_manager' | 'support'
+          created_at?: string
+          last_login?: string | null
         }
       }
-      trips: {
+      admin_logs: {
         Row: {
           id: string
-          user_id: string
-          title: string
-          start_date: string
-          end_date: string
-          total_budget: number
-          status: string
+          admin_id: string
+          action: string
+          entity_type: string
+          entity_id: string | null
+          details: Json | null
+          ip_address: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          admin_id: string
+          action: string
+          entity_type: string
+          entity_id?: string | null
+          details?: Json | null
+          ip_address?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          admin_id?: string
+          action?: string
+          entity_type?: string
+          entity_id?: string | null
+          details?: Json | null
+          ip_address?: string | null
+          created_at?: string
+        }
+      }
+      admin_permissions: {
+        Row: {
+          id: string
+          role: string
+          resource: string
+          action: string
+        }
+        Insert: {
+          id?: string
+          role: string
+          resource: string
+          action: string
+        }
+        Update: {
+          id?: string
+          role?: string
+          resource?: string
+          action?: string
+        }
+      }
+      profiles: {
+        Row: {
+          id: string
+          name: string | null
+          avatar_url: string | null
+          bio: string | null
+          preferences: Json | null
           created_at: string
           updated_at: string
         }
         Insert: {
-          id?: string
-          user_id: string
-          title: string
-          start_date: string
-          end_date: string
-          total_budget: number
-          status?: string
+          id: string
+          name?: string | null
+          avatar_url?: string | null
+          bio?: string | null
+          preferences?: Json | null
           created_at?: string
           updated_at?: string
         }
         Update: {
           id?: string
-          user_id?: string
-          title?: string
-          start_date?: string
-          end_date?: string
-          total_budget?: number
-          status?: string
+          name?: string | null
+          avatar_url?: string | null
+          bio?: string | null
+          preferences?: Json | null
           created_at?: string
           updated_at?: string
         }
       }
-      destinations: {
+      badges: {
         Row: {
           id: string
-          trip_id: string
-          city: string
-          country: string
-          arrival_date: string
-          departure_date: string
+          name: string
+          icon: string
+          description: string
           created_at: string
         }
         Insert: {
           id?: string
-          trip_id: string
-          city: string
-          country: string
-          arrival_date: string
-          departure_date: string
+          name: string
+          icon: string
+          description: string
           created_at?: string
         }
         Update: {
           id?: string
-          trip_id?: string
-          city?: string
-          country?: string
-          arrival_date?: string
-          departure_date?: string
+          name?: string
+          icon?: string
+          description?: string
           created_at?: string
         }
       }
-      travelers: {
-        Row: {
-          id: string
-          trip_id: string
-          full_name: string
-          email: string | null
-          phone: string | null
-          document_type: string | null
-          document_number: string | null
-          created_at: string
-        }
-        Insert: {
-          id?: string
-          trip_id: string
-          full_name: string
-          email?: string | null
-          phone?: string | null
-          document_type?: string | null
-          document_number?: string | null
-          created_at?: string
-        }
-        Update: {
-          id?: string
-          trip_id?: string
-          full_name?: string
-          email?: string | null
-          phone?: string | null
-          document_type?: string | null
-          document_number?: string | null
-          created_at?: string
-        }
-      }
-      hotels: {
-        Row: {
-          id: string
-          trip_id: string
-          destination_id: string
-          hotel_name: string
-          check_in_date: string
-          check_out_date: string
-          room_type: string
-          price_per_night: number
-          booking_reference: string | null
-          created_at: string
-        }
-        Insert: {
-          id?: string
-          trip_id: string
-          destination_id: string
-          hotel_name: string
-          check_in_date: string
-          check_out_date: string
-          room_type: string
-          price_per_night: number
-          booking_reference?: string | null
-          created_at?: string
-        }
-        Update: {
-          id?: string
-          trip_id?: string
-          destination_id?: string
-          hotel_name?: string
-          check_in_date?: string
-          check_out_date?: string
-          room_type?: string
-          price_per_night?: number
-          booking_reference?: string | null
-          created_at?: string
-        }
-      }
-      flights: {
-        Row: {
-          id: string
-          trip_id: string
-          airline: string
-          flight_number: string
-          departure_city: string
-          arrival_city: string
-          departure_time: string
-          arrival_time: string
-          price: number
-          booking_reference: string | null
-          created_at: string
-        }
-        Insert: {
-          id?: string
-          trip_id: string
-          airline: string
-          flight_number: string
-          departure_city: string
-          arrival_city: string
-          departure_time: string
-          arrival_time: string
-          price: number
-          booking_reference?: string | null
-          created_at?: string
-        }
-        Update: {
-          id?: string
-          trip_id?: string
-          airline?: string
-          flight_number?: string
-          departure_city?: string
-          arrival_city?: string
-          departure_time?: string
-          arrival_time?: string
-          price?: number
-          booking_reference?: string | null
-          created_at?: string
-        }
-      }
-      saved_trips: {
+      user_badges: {
         Row: {
           id: string
           user_id: string
-          trip_id: string
-          created_at: string
+          badge_id: string
+          earned_at: string
         }
         Insert: {
           id?: string
           user_id: string
-          trip_id: string
-          created_at?: string
+          badge_id: string
+          earned_at?: string
         }
         Update: {
           id?: string
           user_id?: string
-          trip_id?: string
-          created_at?: string
+          badge_id?: string
+          earned_at?: string
         }
       }
     }
